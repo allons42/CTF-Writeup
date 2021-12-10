@@ -1,3 +1,5 @@
+第零届北京大学信息安全综合能力竞赛（PKU GeekGame）的Writeup，题目及官方题解：[geekgame-0th](https://github.com/PKU-GeekGame/geekgame-0th)。
+
 ## Misc部分
 
 ## 第一题：签到
@@ -70,9 +72,7 @@ ping一下内网代理查到ip地址，在浏览器里设置代理即可登入�
 
 最后意识到密钥在源码开头就有写，而报错信息刚好就在密钥部分代码的下方。观察到报错的原因是没有获取到输入的flag，代码对空对象进行strip操作产生的，如果出错的位置再高几行刚好会暴露密钥。按这个思路手动重写POST请求，照葫芦画瓢把json数据里的action也设为null，于是在action这行代码上报错，暴露了密钥。之后用flask--unsign这个软件用密钥对`{admin:True}`签名，修改cookie数据，成功进入已登录状态，拿到flag。
 
-![flask](./img/flask.png)
-
-
+<img src="./img/flask.png" width=50% />
 
 ## Binary部分
 
