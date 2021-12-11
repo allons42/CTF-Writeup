@@ -1,3 +1,5 @@
+第零届北京大学信息安全综合能力竞赛（PKU GeekGame）的Writeup，题目及官方题解：[geekgame-1st](https://github.com/PKU-GeekGame/geekgame-1st)。
+
 ## 签到
 
 这不是巧了吗，前段时间做Puzzle hunt刚见过wingdings。不过这道题也不用手动翻译，是字符串加了字体而不是图片格式，直接 Ctrl A + Ctrl C + Ctrl V 到 txt 即可。得到两行字符，轮流读取得到flag。
@@ -181,18 +183,7 @@ zip --symlinks test.zip flag
 
 flag0：看了提示之后去查了node.js的源码目录结构，目标应该是上一层文件夹里的package.json，从浏览器的调试模式重新发送请求 https://prob11-vluaa5z4.geekgame.pku.edu.cn/api/..%2fpackage.json，拿到了源码的压缩包，根据最后一段代码直接得到flag1=\`flag{${0.1+0.2}}\`=flag{0.30000000000000004}。
 
-   <img src="./img/nodejs.jpg" align='left' style='zoom: 80%;'/>
-
-
-
-
-
-
-
-
-
-
-
+<img src="./img/nodejs.jpg" align='left' style='zoom: 80%;'/>
 
 
 ## 诡异的网关
