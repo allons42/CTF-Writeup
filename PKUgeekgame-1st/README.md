@@ -181,7 +181,8 @@ zip --symlinks test.zip flag
 
 ## Flag即服务
 
-flag0：看了提示之后去查了node.js的源码目录结构，目标应该是上一层文件夹里的package.json，从浏览器的调试模式重新发送请求`https://prob11-vluaa5z4.geekgame.pku.edu.cn/api/..%2fpackage.json` ，拿到了源码的压缩包，根据最后一段代码直接得到flag1=\`flag{${0.1+0.2}}\`=flag{0.30000000000000004}。
+flag0：看了提示之后去查了node.js的源码目录结构，目标应该是上一层文件夹里的package.json，从浏览器的调试模式重新发送请求`https://prob11-vluaa5z4.geekgame.pku.edu.cn/api/..%2fpackage.json` ，拿到了源码的压缩包，根据最后一段代码直接得到flag0=\`flag{${0.1+0.2}}\`=flag{0.30000000000000004}。
+
 flag1要求篡改程序内的"activate"参数，猜测可能是原型链污染，但是没找到注入的方法。
 
 <img src="./img/nodejs.jpg" align='left' style='zoom: 80%;'/>
