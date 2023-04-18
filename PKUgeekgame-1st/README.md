@@ -1,4 +1,4 @@
-第零届北京大学信息安全综合能力竞赛（PKU GeekGame）的Writeup，题目及官方题解：[geekgame-1st](https://github.com/PKU-GeekGame/geekgame-1st)。
+第一届北京大学信息安全综合能力竞赛（PKU GeekGame）的Writeup，题目及官方题解：[geekgame-1st](https://github.com/PKU-GeekGame/geekgame-1st)。
 
 ## 签到
 
