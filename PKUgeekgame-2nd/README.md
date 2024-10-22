@@ -173,9 +173,9 @@ assert all(0x20<=ord(c)<=0x7e for c in text) and len(text)<=4000 and '%' not in 
 一个标准的网址格式是`scheme://username:password@host:port/path?query#fragment`，这些符号都有特定的含义，不太可能通过混淆让chorme分段出错。具体分析omnibox解析输入的[代码逻辑](https://blog.csdn.net/xingtian713/article/details/4516738)和[关键源码](https://chromium.googlesource.com/chromium/src/+/refs/tags/106.0.5249.163/components/omnibox/browser/autocomplete_input.cc#235)，发现关键在于”用户没有输入scheme时，需要分辨URL和query“。所以目标是输入`http://`时能作为URL，但去掉之后能逃脱这段检查：
 
 1. username包含空格，则判定为unknown：e.g. `a a@baidu.com`
-2. host为ipv4地址，1 < num_ipv4_components < 4 且结尾没有slash，则判定为query：e.g. `0xa2.0x69.0x101d:port`
+2. host为ipv4地址，1 < num_ipv4_components < 4 且结尾没有slash，则判定为query：e.g. `0xaa.0xaa.0xaaaa:port`
 
-由于实际输入是构造的地址加上`.jpg`，为了回避slash构造出如下payload：`http://0xa2.0x69.0x101d:9811?`，在自己的服务器上搭建一个简易flask，title写成目标字符串，拿到flag1。
+由于实际输入是构造的地址加上`.jpg`，为了回避slash构造出如下格式的payload：`http://0xaa.0xa.0xaaaa:1111?`，在自己的服务器上搭建一个简易flask，title写成目标字符串，拿到flag1。
 
 #### flag2
 
@@ -264,7 +264,7 @@ flag1长度很短，可以通过递归搜索的方式插入可能的字节，暴
 
 #### flag1
 
-已知x长度是26，已知A和b，直接用python的`scipy.optimize.nnls`或`numpy.linalg.solve`直接求解方程组，结果四舍五入取整即可。
+已知x长度是26，已知A和b，直接用python的`scipy.optimize.nnls`或`numpy.linalg.solve`求解方程组，结果四舍五入取整即可。
 
 #### flag2
 

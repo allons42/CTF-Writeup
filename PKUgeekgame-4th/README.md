@@ -2,9 +2,9 @@
 
 学生时代的最后一年，终于拿到一次二等奖，还抢到两个一血，可喜可贺，可喜可贺。
 
-![score1](img/score1.png)
+![](img/score1.png)
 
-![score2](img/score2.png)
+![干啥啥不行，熬夜第一名](img/score2.png)
 
 
 
@@ -33,9 +33,9 @@ for f in fs:
 
 ## *北清* 问答
 
-问答最顺利的一集，两次尝试就过了，全局一血，爽！
+问答最顺利的一集，两次尝试就过了。全局一血，爽！
 
-![trivia](img/trivia.png)
+![](img/trivia.png)
 
 > 1. 在清华大学百年校庆之际，北京大学向清华大学赠送了一块石刻。石刻**最上面**一行文字是什么？
 
@@ -166,7 +166,7 @@ flag2的脚本：[minus-world-ending_blankframesremoved by Darkdevel](minus-worl
 
 中间的几个小障碍：
 
-1. 网上的TAS脚本都是fm2格式的，题目需要提交二进制文件。好在源码有bin_to_fm2的示范，写一个反向的[fm2_to_bin](codes/fm2_to_bin.py)即可。
+1. 网上的TAS脚本都是fm2格式的，题目需要提交二进制文件。好在源码有bin_to_fm2的示范，写一个反向的[fm2_to_bin](https://github.com/allons42/CTF-Writeup/tree/main/PKUgeekgame-4th/codes/fm2_to_bin.py)即可。
 1. flag1用的脚本非常极限，在通关瞬间就结束操作，导致没拿到flag。最后补了几秒的无操作解决。
 1. flag2只搜到了路上经过minus world的脚本，还都是FDS系统的。试了好几个，似乎都和服务器上的游戏对不上轴，而且开头的等待时间非常长。提交时把开头的无操作时间设置为和flag1一样的32帧，并且截掉了5000秒之后的操作。
 
@@ -178,7 +178,7 @@ flag2的脚本：[minus-world-ending_blankframesremoved by Darkdevel](minus-worl
 
 打开网页，可以看到两个输入验证码的关卡。题目明示了要想办法复制css里的原始数据，但复制、搜索、甚至控制台都打不开。
 
-但！是！——简单尝试发现，只要在进入关卡前打开控制台，就可以正常浏览和修改页面元素。复制centralNoiseContainer中的原始数据，并在在input里添加value元素和相应内容，点击提交即可。
+但！是！——简单尝试发现，只要在进入关卡前打开控制台，就可以正常浏览和修改页面元素。复制centralNoiseContainer中的原始数据，并在input里添加value元素和相应内容，点击提交即可。
 
 ### flag2（出乎意料的卡）
 
@@ -199,7 +199,7 @@ QjicR: "__selenium_unwrapped",
 yYEHM: "__fxdriver_unwrapped",
 ```
 
-![copy](img/copy.png)
+![有黑客！](img/copy.png)
 
 2. 卡题的时候尝试在手机上打开页面，有些手机浏览器（例如X浏览器）可以打开开发者工具且不被发现，但页面元素中还是找不到数据。可以抓取到root元素，有个很长的字符串疑似是生成数据用的种子，但实在不想读源码去研究怎么生成的。也尝试了各种手机浏览器自带的文字提取、阅读模式等插件，都无法奏效。
 
@@ -218,17 +218,17 @@ yYEHM: "__fxdriver_unwrapped",
 </style>
 ```
 
-虽然还是很麻烦，但至少可以写个脚本稳定过关。可以查看[导出的html文件](codes/nocopy.html)和[解码脚本](codes/nocopy.py)。
+虽然还是很麻烦，但至少能写个脚本稳定过关。保存了[导出的html文件](https://github.com/allons42/CTF-Writeup/tree/main/PKUgeekgame-4th/codes/nocopy.html)和[解码脚本](https://github.com/allons42/CTF-Writeup/tree/main/PKUgeekgame-4th/codes/nocopy.py)。
 
 
 
 ## ICS笑传之查查表
 
-又一个一血！但是过的迷迷糊糊，怀疑非预期了。
+> First Blood！但是过的迷迷糊糊，怀疑非预期了。
 
 看起来是个博客网站，先注册个账号随便逛逛。嗯……可以写博客，可以看别人，可以生成Access Token用来登录。但是看不到admin的私有文章。没找到社工admin密码的机会，那就先看看cookie：
 
-![memos](img/memos.png)
+![](img/memos.png)
 
 一眼JWT格式，这个2是怎么回事？注册了一个新账号，发现cookie里的"subs"变成了3，那1肯定就是admin了。尝试修改了"subs"重新生成JWT，可惜有HS256加密，并不能生效。
 
@@ -385,15 +385,17 @@ strings pymaster_extracted/PYZ-00.pyz_extracted/random.pyc | grep flag
 
 ### flag3
 
-前面拿到的python程序经过了变量名混淆，可读性很差。简单做了一些字符替换后丢给Gemini，结果一眼看出是个二叉搜索树，还指出了哪个是父节点、哪个是子节点，节省了许多审计代码的时间，Salute！
+前面拿到的python程序经过了变量名混淆，可读性很差。简单做了一些字符替换后丢给Gemini，结果一眼看出是个二叉搜索树，还指出了哪个是父节点、哪个是子节点，节省了许多审计代码的时间。
 
-![pymaster](img/pymaster.png)
+![Salute！](img/pymaster.png)
 
-这个解读满分，整个程序做的事情都被Gemini解释完了，一顿操作下来其实就是给输入的字符串重新排了个序，我们需要还原出能通过程序检查的flag。
+整个程序做的事情都被Gemini解释完了。一顿操作下来其实就是给输入的字符串重新排了个序，我们需要还原出能通过程序检查的flag。
 
 要恢复这个顺序，只需要注意到选择节点用来旋转时用的还是random，也就是“被神秘力量影响”的那个。所以把这个`random.pyc`和调试用的脚本放到一起，就可以固定随机数，完美复现结果了……吗？
 
-在这一步被卡了两个多小时，试遍了各种调试环境的办法都不对，最后才想起来程序在import random之后先运行了一次randint！！！太坑人了！
+在这一步被卡了两个多小时，试遍了各种调试环境的办法都不对，最后才想起来程序在import random之后先运行randint过掉了一个随机数！！！
+
+太坑人了！
 
 
 
@@ -403,16 +405,16 @@ strings pymaster_extracted/PYZ-00.pyz_extracted/random.pyc | grep flag
 
 先上checksec，没有Canary和PIE。
 
-![rtree1](img/rtree1.png)
+![](img/rtree1-1.png)
 
 反汇编之后审计一遍代码，代码中提供了直接反弹shell的backdoor。主函数在栈上维护了一个链表，实现了insert和show两个功能，每个节点结构如下所示：
 
-| 内容                      | 长度    |
-| ------------------------- | ------- |
-| key（节点索引）           | 8 Bytes |
-| *data（数据起点的指针）   | 8 Bytes |
-| size+24（整个节点的大小） | 8 Bytes |
-| data（实际数据部分）      | =size   |
+| 内容                       | 长度    |
+| -------------------------- | ------- |
+| key（节点索引）            | 8 Bytes |
+| data_ptr（数据起点的指针） | 8 Bytes |
+| size+24（整个节点的大小）  | 8 Bytes |
+| data（实际数据部分）       | =size   |
 
 这里size存储的是整个节点的大小，但后面的read却调用了这个值而非数据部分的大小，导致比输入的size多读取了24字节。检查了吗？如查。总之我们可以在每次insert操作里向后溢出24个字节。而这个字符串的位置接近栈底，可以将main函数的返回地址覆盖为backdoor，在main结束后拿到shell。
 
@@ -425,18 +427,22 @@ payload = b'x' * 496 + p64(0x0000000000401231)
 
 ### flag2 堆溢出+ret2libc
 
-其实很简单，但是由于实在缺乏pwn经验，花一整天走了超多弯路，啃下来反而是整个比赛里学到东西最多的。
+> 其实很简单，但是实在缺乏pwn经验。花一整天走了超多弯路，啃下来反而是整个比赛里学到东西最多的。
 
 照例先上checksec，这次有了Canary，还是没有PIE。
 
-![rtree1](img/rtree2-1.png)
+![](img/rtree2-1.png)
 
-这次依然有backdoor，但仅仅是调用了system，并不能获得shell。主函数升级成了堆上的链表，每个节点结构如下所示，大小为固定的40字节，而data会按照size的大小另外申请堆节点。
+依然有backdoor，但仅仅是调用了system，并不能获得shell。
+
+![](img/rtree2-2.png)
+
+主函数升级成了堆上的链表，每个节点结构如下所示，大小为固定的40字节，而data会按照size的大小另外申请堆节点。
 
 | 内容                         | 长度    | 偏移量 |
 | ---------------------------- | ------- | ------ |
 | key（节点索引）              | 4 Bytes | +0     |
-| 空                         | 4 Bytes | +4    |
+| 空                           | 4 Bytes | +4     |
 | data_ptr（数据起点的指针）   | 8 Bytes | +8     |
 | size（数据大小）             | 4 Bytes | +16    |
 | 空                           | 4 Bytes | +20    |
@@ -463,7 +469,7 @@ payload = b'x' * 496 + p64(0x0000000000401231)
 
 接下来看看我们能做什么：主函数用非常抽象的四层while true搞了个选项分类，实现了insert、show和edit。其中insert十分规矩地申请节点并填入数据，show从data_ptr读取大小为size的数据，edit允许从 `*data_ptr+index` 的位置开始写入8个字节。edit在修改前会检查 `index < size`，检查了吗？如查。这里虽然不能向后溢出，但是可以输入负值，从而修改上一个堆块的数据。
 
-![rtree1](img/rtree2-2.png)
+![](img/rtree2-3.png)
 
 现在我们有了几乎任意写的工具，最容易想到的就是把当前堆块的edit函数指针改掉，例如劫持为backdoor。我们的目标是执行`system("cat flag")`，而edit的第一个参数刚好就是data_ptr，我们可以控制data的内容为任意shell code。由于每个节点只允许edit一次，所以依次执行以下步骤：
 
@@ -480,7 +486,7 @@ payload = b'x' * 496 + p64(0x0000000000401231)
 
 比赛中为了flag2绕了非常大的弯子，事后才发现走远了……总之值得记录一下。
 
-主要是想复杂了，以为需要在data块内创建一整个假节点，再把上一个节点的next指针接过来。这样需要在next处填假节点的真实地址，可问题在于 **ASLR** 机制随机化了堆的起始地址，没法准确定位。但是，我们还有办法！如果把data到下一个节点的data_ptr之间填满，就可以通过show函数里的printf把data_ptr打印出来。于是进行了以下奇妙操作：
+主要是想复杂了，以为需要在data块内创建一整个假节点，再把上一个节点的next指针接过来。这样需要在next处填假节点的真实地址，可问题在于 **ASLR** 机制随机化了堆的起始地址，没法准确定位。但是还有办法！如果把data到下一个节点的data_ptr之间填满，就可以利用show函数里的printf把data_ptr打印出来。于是进行了以下奇妙操作：
 
 1. insert 4次，连续创建4个数据大小为32字节的节点1, 2, 3, 4
 2. edit 2，偏移量-64，填充data 1后的chunk header前8个字节
@@ -505,7 +511,9 @@ payload = p64(0x6) + p64(addr_data) + p64(0x20) + p64(addr_backdoor) + p64(0x0)
 7. edit 5，偏移量-16，注入data 5这个假节点的真实地址，使其被识别为节点6
 8. edit 6，成功跳转到后门函数
 
-这么一套操作下来，由于假节点的data_ptr也是可控的，已经实现了任意读和任意写，接下来只要想办法搞到libc的真实地址就可以call system了。怎么拿到真实地址呢，去PLT表查GOT表的地址……等等，[PLT表原来可以直接调用](https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/basic-rop/#ret2libc)？！此题，终。
+这么一套操作下来，由于假节点的data_ptr也是可控的，已经实现了任意读和任意写，接下来只要想办法搞到libc的真实地址就可以call system了。怎么拿到真实地址呢，去PLT表查GOT表的地址……等等，[PLT表原来可以直接调用](https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/basic-rop/#ret2libc)？！
+
+此题，终。
 
 
 
@@ -588,7 +596,7 @@ for i in range(2, 100):
 
 最后，把目标密文的二进制数据拆解成6 bit一组，按照上面的码表进行复原即可。还需要注意下面几点：
 
-1. 压缩和原文都存在小端法导致的正反颠倒，需要格外注意。最终实现的[代码](codes/algo-zip/algo-gzip.ipynb)用到了https://github.com/LaihoE/tiralabra的gzip还原代码，对调试过程非常有帮助
+1. 压缩和原文都存在小端法导致的正反颠倒，需要格外注意。最终实现的[代码](https://github.com/allons42/CTF-Writeup/tree/main/PKUgeekgame-4th/codes/algo-zip/algo-gzip.ipynb)用到了https://github.com/LaihoE/tiralabra的gzip还原代码，对调试过程非常有帮助
 2. 后面要补齐其他字符的数量，保证频率相同
 3. 要保证明文不能被LZ77压缩，最简单的办法就是多试几次random.shuffle
 4. 压缩块的数据并不会按字节对齐，flag2需要在前面补不定长的padding，可以靠暴力穷举解决
@@ -598,18 +606,20 @@ for i in range(2, 100):
 
 ## 随机数生成器
 
-脚本：[randc](codes/randc.ipynb) [randpy](codes/randpy.ipynb) [randgo](codes/randgo.ipynb)
+脚本：[randc](https://github.com/allons42/CTF-Writeup/tree/main/PKUgeekgame-4th/codes/randc.ipynb) [randpy](https://github.com/allons42/CTF-Writeup/tree/main/PKUgeekgame-4th/codes/randpy.ipynb) [randgo](https://github.com/allons42/CTF-Writeup/tree/main/PKUgeekgame-4th/codes/randgo.ipynb)
 
 ### flag1 C++
 
 C++使用的随机数算法是LCG+LSFR，对于单纯的LCG，其实只需要知道连续四个数就能大概率破解，例如：
 $$
+\begin{align}
 已知\ &a_{n+1} = a * a_n+c\ (mod\ n) \\
 &a_{n+2} = a * a_{n+1}+c\ (mod\ n) \\
 &a_{n+3} = a * a_{n+2}+c\ (mod\ n) \\ \\
 令\ &t_n = a_{n+1}-a_n\ (mod\ n)\\
 则\ &t_{n+2} = a * t_{n+1} = a^2 * t_{n} \\
 于是\ &t_{n+2} * t_{n} - t_{n+1}^2 = 0\ (mod\ n)
+\end{align}
 $$
 只要求 $t_{n+2} * t_{n} - t_{n+1}^2$ 和 $n$ 的最大公倍数即可分解 $n$ 的质因数。
 
@@ -631,8 +641,11 @@ $$
 一点花絮：预期的暴力解法是枚举随机种子，所以答案是`flag{DO_y0U_EnumeraTed_a1L_sE3d5?}`。但我用了方程组的解法，最后需要枚举有一定误差的解，所以把答案当成了`flag{DO_y0U_EnumeraTed_a1L_rE3d5?}`。需要枚举不同的reads，这也很合理吧……
 
 ### flag2 python
-python的随机数是明确使用梅森旋转算法（MT19937）生成的。之前只知道连续的624个随机数可以完全还原内部状态，但这道题里我们只能确定前五个数字的精确数值。一度觉得没法求解，打算暴力获取大量随机数求平均值偏移了……果然还是太离谱了。
-以前只会调包解梅森旋转，现在还是得自己看懂原理。找到一些很有用的参考资料：
+
+> 被迫彻底学会MT19937了。
+
+python的随机数是明确使用梅森旋转算法（MT19937）生成的。之前只知道连续的624个随机数可以完全还原内部状态，但这道题里我们只能确定前五个数字的精确数值。一度觉得没法求解，打算暴力获取大量随机数求平均值偏移……果然还是太离谱了。
+以前解MT19937只会调包，现在还是得看懂原理。找到一些很有用的参考资料：
 
 [Cracking Random Number Generators](https://jazzy.id.au/2010/09/22/cracking_random_number_generators_part_3.html)
 
@@ -687,7 +700,7 @@ class TemperInverser:
 inverser = TemperInverser()
 ```
 
-至于每个内部状态s[n]的更新，其实只跟三个状态有关：s[n], s[n+1], s[n+397]，这种更新可以在一轮624个随机数生成完之后批量进行，也可以在每个随机数生成后实时进行，并不会影响结果。
+至于每个内部状态s[n]的更新，其实只跟三个状态有关：s[n], s[n+1], s[n+397]。这种更新可以在一轮624个随机数生成完之后批量进行，也可以在每个随机数生成后实时进行，并不会影响结果。
 
 ```python
 def twister(n0, n1, n397):
@@ -721,6 +734,7 @@ char_set = string.ascii_letters + string.digits + " _{}"
 ## 不经意的逆转
 
 ### flag1
+
 比较自然的思路是用$v_0-v_1$把$f$消掉，但是没办法控制合适的$v$把$v-x_0$和$v-x_1$消掉。即使两个数是相反数，因为$d$一定是奇数，所以$d$次幂还是相反数。
 
 但是，我们至少可以消掉其中一项，例如取$v=x_1$，这样会得到以下等式：
@@ -732,13 +746,15 @@ $$
 注意到$n=pq$，可以将多项式展开，消去含$pq$的项：
 
 $$
-&v_0-v_1&=&(x_0-x_1)^d + (p^d+q^d)-(p^d-q^d)\ \ &(mod\ n) \\
-&&=& (x_0-x_1)^d + 2q^d\ \ &(mod\ n) \\
-=>&(x_0-x_1)^d&=&v_0-v_1-2q^d \ \ &(mod\ n) \\
-=>&(x_0-x_1)^d&=&v_0-v_1 \ \ &(mod\ q) \\
-=>&(v_0-v_1)^e&=&(x_0-x_1)^{de} \ \ &(mod\ q) \\
-&&=&(x_0-x_1) \ \ &(mod\ q) \\
-=>&(v_0-v_1)^e-(x_0-x_1)&=&0 \ \ &(mod\ q) \\
+\begin{align}
+&v_0-v_1=(x_0-x_1)^d + (p^d+q^d)-(p^d-q^d)\ \ &(mod\ n) \\
+&v_0-v_1= (x_0-x_1)^d + 2q^d\ \ &(mod\ n) \\
+\implies&(x_0-x_1)^d=v_0-v_1-2q^d \ \ &(mod\ n) \\
+\implies&(x_0-x_1)^d=v_0-v_1 \ \ &(mod\ q) \\
+\implies&(v_0-v_1)^e=(x_0-x_1)^{de} \ \ &(mod\ q) \\
+&(v_0-v_1)^e=(x_0-x_1) \ \ &(mod\ q) \\
+\implies&(v_0-v_1)^e-(x_0-x_1)=0 \ \ &(mod\ q) \\
+\end{align}
 $$
 
 经过以上推导，发现$(v_0-v_1)^e-(x_0-x_1)$是一个已知的整除$q$的数。取其与$n$的最大公倍数，即可解出$q$，继而解出$p$和$f$。
@@ -748,8 +764,10 @@ $$
 如果取$v=\frac{x_0+x_1}2$，在$v$是整数的条件下，$(v-x_0)^d$和$(v-x_1)^d$会是相反数，将两个等式加起来可以消去这两个未知量：
 
 $$
-v_0+v_1&=&(p+q)^d+(p-q)^d + f + f^{-1}\ \ &(mod\ n) \\
-&=& 2p^d + f + f^{-1}\ \ &(mod\ n) \\
+\begin{align}
+v_0+v_1&=(p+q)^d+(p-q)^d + f + f^{-1}\ \ &(mod\ n) \\
+&= 2p^d + f + f^{-1}\ \ &(mod\ n) 
+\end{align}
 $$
 
 考虑模$p$，可以化简为以下形式：
@@ -779,6 +797,7 @@ is_prime1 = lambda n: (2**n - 2) % n == 0
 
 # x // (x - 1)：x不等于1时，可以把x归一化到0和1
 # 1 // (x**2 + 1)：也可以把x归一化到0和1，并且少写一遍x; x > 1时不需要平方
+# 官方Writeup用的是1 // x，更简洁优雅
 is_prime2 = lambda n: 1 // ((2**n - 2) % n + 1)
 ```
 
@@ -793,16 +812,17 @@ is_prime = lambda n: 1//((2**n-2)%n+1)-1//((n-341)**2+1)
 为了计算Pell数，可以利用其通项公式：
 
 $$
-P_{n+1}=\frac{(1+\sqrt2)^n-(1-\sqrt2)^n}{2\sqrt2}
+P_n=\frac{(1+\sqrt2)^n-(1-\sqrt2)^n}{2\sqrt2}
 $$
 
 但是这样写出的表达式太长了。注意到n较大时后一项是趋向于0的，所以可以直接忽略掉。为了调和数列中前几项的误差，在分子上加一个较小的项。最终得到：
 
 $$
-P_n\approx\lfloor\frac{(1+\sqrt2)^{n-1}+1}{2\sqrt2}\rfloor
+P_n\approx\lfloor\frac{(1+\sqrt2)^n+1}{2\sqrt2}\rfloor
 $$
 
 ```python
+# 题目里的Pell数向后移了一位，要把n换成n-1
 # 强行取整，忽略掉后一项，加上一个固定的小项
 pell = lambda n: ((1+2**(1/2))**(n-1)+1)//(2**(3/2))
 ```
@@ -811,7 +831,7 @@ pell = lambda n: ((1+2**(1/2))**(n-1)+1)//(2**(3/2))
 
 尝试了各种运算，都不可能把浮点数变回整型，遂放弃。二阶段提示提供了一个 **绝妙的** 用整数公式计算Fibonacci的思路：[An integer formula for Fibonacci numbers](https://blog.paulhankin.net/fibonacci/)。
 
-根据Pell数的母函数
+照葫芦画瓢，根据Pell数的母函数
 
 $$
 F(x)=\frac1{1-2x-x^2}=P_0+P_1x+P_2x^2+...
@@ -823,7 +843,7 @@ $$
 F(10^{-3})=1.002\ 005\ 012\ 029\ 070\ 169\ ...
 $$
 
-> 根据母函数的性质其实证明很直观，但真的是注意力惊人
+> 根据母函数的性质其实证明很直观，但真的是 **注意力惊人**
 
 照着原文修改Pell数的母函数，得到计算公式（k需要足够大，保证$10^k>P_n$）
 
@@ -831,7 +851,7 @@ $$
 \lfloor10^{kn}F(10^{-k})\rfloor=P_n\ (mod\ 10^k)
 $$
 
-没有多做优化，取$k=n$，这样就足够计算Pell数了：
+没有多做优化，取$k=n$，就足够计算Pell数了：
 
 ```python
 pell = lambda n: 10**(n*n)//(100**n-2*10**n-1)%(10**n)
