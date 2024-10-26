@@ -778,6 +778,36 @@ $$
 
 感觉只差最后一步了，可惜还是没解出来。
 
+> 赛后补个正确解法
+
+好好读读 [Sage文档](https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_modn_dense_ntl.html#sage.rings.polynomial.polynomial_modn_dense_ntl.small_roots) 和 [Coppersmith基本原理](https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_coppersmith_attack/)：
+
+> 对于次数为$δ$的多项式$f$，模数N的因子$b > N^\beta$，Coppersmith方法可以求解多项式同余方程 $f(x)=0\ (mod\ N)$ 模b的小整数根，范围是$|x|<cN^{\frac{\beta^2}\delta}$。
+
+根据之前的推导，已经得到了关于未知数的模多项式，次数$\delta=2$，N的因数$p>N^{0.49}$，因此可求解的根必须小于$N^{\frac{\beta^2}\delta}\approx N^{0.12}$，但实际的f是1024位，而N是2048位，不满足需求。
+
+最后一步需要用Broadcast方法解决，获取多组不同的$n_1, n_2,...$，即可用中国剩余定理得到$N=\Pi n_i$。为了得到足够大的N，至少需要获取5个方程。
+$$
+\begin{align}
+&f + f^{-1}=c_1  &(mod\ p_1) \\
+&f + f^{-1}=c_2  &(mod\ p_2) \\
+&...... \\ \\
+\implies&f + f^{-1}=C &(mod\ P) \\
+\implies&f^2 - Cf + 1=0 &(mod\ P)
+\end{align}
+$$
+准备好以上参数后，可以在[Sage Cell Server](https://sagecell.sagemath.org/)网页上完成计算，只需要三行代码：
+
+```sage
+N = ...
+C = ...
+
+P.<x> = PolynomialRing(Zmod(N), implementation='NTL')
+
+poly = x**2-2*x+1
+poly.small_roots(X=2**1024, beta=0.49, epsilon=0.04)
+```
+
 
 
 ## 神秘计算器
