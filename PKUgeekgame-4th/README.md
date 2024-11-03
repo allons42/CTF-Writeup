@@ -627,13 +627,17 @@ emmm……走远了，在拿到的数据上跑不出结果，看来实际上的�
 
 查了一大圈总算找到了真正的实现，可以参考[这里](https://www.mscs.dal.ca/~selinger/random/)。每个随机数只与序列中前几个数有关，但是最低位舍去导致可能有1的误差：
 $$
-o_n = o_{n-31} + o_{n-3} \ \ (+1) \ \ (mod \  2^{31}) \\
-a_n = o_n + f_{n \% L}
+\begin{align}
+&o_n = o_{n-31} + o_{n-3} \ \ (+1) \ \ (mod \  2^{31}) \\
+&a_n = o_n + f_{n \% L}
+\end{align}
 $$
 所以不用考虑初始化的算法，只需关注随机数之间的关系。我们可以从题目中获得连续的无限多个$a_n$，输出结果是在这之上加了一个偏移量。这些$a_n$和未知数$f$构成了如下线性方程，未知数只有flag的长度L和相应的L位flag。
 $$
-o_n+f_{n \% L}=o_{n-31}+f_{(n-31) \% L}+o_{n-3}+f_{(n-3) \% L} +\epsilon \ (mod \  2^{31}) \\
-即，f_{n \% L}-f_{(n-31) \% L}-f_{(n-3) \% L}=o_{n-31}+o_{n-3}-o_n +\epsilon \ (mod \  2^{31}) 
+\begin{align}
+&o_n+f_{n \% L}=o_{n-31}+f_{(n-31) \% L}+o_{n-3}+f_{(n-3) \% L} +\epsilon \ (mod \  2^{31}) \\
+即，&f_{n \% L}-f_{(n-31) \% L}-f_{(n-3) \% L}=o_{n-31}+o_{n-3}-o_n +\epsilon \ (mod \  2^{31})
+\end{align}
 $$
 具体来说，枚举所有的L，对每个L，取前L个方程，就构成了L元的线性方程组，可以用`scipy.optimize.nnls`等方法求解。虽然会有一点点误差，但正确的L解出的答案肯定在正确的flag附近。例如$f_0=ord('f')=102$，相应的解就应当在$102±2$的范围内。
 这样枚举后，可以锁定周期L是34或68，固定L之后再固定部分可以辨认出的字符，进一步求解剩下的单词即可。
@@ -778,22 +782,28 @@ $$
 
 感觉只差最后一步了，可惜还是没解出来。
 
-> 赛后补个正确解法
+### flag2 *
 
-好好读读 [Sage文档](https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_modn_dense_ntl.html#sage.rings.polynomial.polynomial_modn_dense_ntl.small_roots) 和 [Coppersmith基本原理](https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_coppersmith_attack/)：
+赛后补个正确解法。好好读读 [Sage文档](https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_modn_dense_ntl.html#sage.rings.polynomial.polynomial_modn_dense_ntl.small_roots) 和 [Coppersmith基本原理](https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_coppersmith_attack/)：
 
 > 对于次数为$δ$的多项式$f$，模数N的因子$b > N^\beta$，Coppersmith方法可以求解多项式同余方程 $f(x)=0\ (mod\ N)$ 模b的小整数根，范围是$|x|<cN^{\frac{\beta^2}\delta}$。
 
 根据之前的推导，已经得到了关于未知数的模多项式，次数$\delta=2$，N的因数$p>N^{0.49}$，因此可求解的根必须小于$N^{\frac{\beta^2}\delta}\approx N^{0.12}$，但实际的f是1024位，而N是2048位，不满足需求。
 
-最后一步需要用Broadcast方法解决，获取多组不同的$n_1, n_2,...$，即可用中国剩余定理得到$N=\Pi n_i$。为了得到足够大的N，至少需要获取5个方程。
+最后一步需要用Broadcast方法解决，为了得到足够大的N，至少需要获取5个方程。
 $$
 \begin{align}
 &f + f^{-1}=c_1  &(mod\ p_1) \\
 &f + f^{-1}=c_2  &(mod\ p_2) \\
-&...... \\ \\
-\implies&f + f^{-1}=C &(mod\ P) \\
-\implies&f^2 - Cf + 1=0 &(mod\ P)
+&...... \\
+\end{align}
+$$
+虽然这些方程在模N意义下不成立，但是我们只关心模P的结果，所以可以强行把$2p^d$扔掉，对N应用中国剩余定理，得到模$N=\Pi n_i$的方程。
+$$
+\begin{align}
+&f + f^{-1}=C &(mod\ P) \\
+改为&f + f^{-1}=C &(mod\ N) \\
+\implies&f^2 - Cf + 1=0 &(mod\ N)
 \end{align}
 $$
 准备好以上参数后，可以在[Sage Cell Server](https://sagecell.sagemath.org/)网页上完成计算，只需要三行代码：
